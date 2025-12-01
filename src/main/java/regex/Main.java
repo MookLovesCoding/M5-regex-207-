@@ -63,10 +63,15 @@ public class Main {
      * @return a list containing the email addresses in the string.
      */
     public static List<String> extractEmails(String str) {
-        // one or more non-space, non-@ characters before @
-        final Pattern pattern = Pattern.compile("[^\\s@]+@(mail\\.utoronto\\.ca|utoronto\\.ca)");
-        final Matcher matcher = pattern.matcher(str);
         final List<String> result = new ArrayList<>();
+        if (str == null) {
+            return result;  // empty list for null input
+        }
+
+        final Pattern pattern =
+                Pattern.compile("[^\\s@]+@(mail\\.utoronto\\.ca|utoronto\\.ca)");
+        final Matcher matcher = pattern.matcher(str);
+
         while (matcher.find()) {
             result.add(matcher.group());
         }
@@ -87,7 +92,10 @@ public class Main {
      * @return whether str contains the same capital letter twice.
      */
     public static boolean checkForDoubles(String str) {
-        // capture a capital letter, then later the same capital letter appears again
+        if (str == null) {
+            return false;
+        }
+        // contains the same capital letter at least twice
         return str.matches(".*([A-Z]).*\\1.*");
     }
 }
